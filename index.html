@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Resume Screener</title>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h2>Upload Resume PDF</h2>
+
+  <input type="file" id="resumeFile" accept=".pdf" />
+  <button onclick="uploadResume()">Upload</button>
+
+  <div id="loading" style="display: none;">Uploading...</div>
+
+  <div id="results" style="margin-top: 20px;"></div>
+
+  <script>
+    async function uploadResume() {
+      const fileInput = document.getElementById('resumeFile');
+      const file = fileInput.files[0];
+      if (!file) return alert("Please select a PDF.");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("results").innerHTML = "";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/upload_resume/", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        document.getElementById("loading").style.display = "none";
+
+        document.getElementById("results").innerHTML = `
+          <h3>Results:</h3>
+          <p><strong>Filename:</strong> ${data.filename}</p>
+          <p><strong>Matched Skills:</strong> ${data.basic_score.matched_skills.join(", ")}</p>
+          <p><strong>Score:</strong> ${data.basic_score.score}/${data.basic_score.total_skills}</p>
+          <p><strong>AI Verdict:</strong></p>
+          <pre>${data.ai_score.verdict}</pre>
+          <p><strong>Resume Text Preview:</strong></p>
+          <pre style="max-height: 200px; overflow: auto; background: #f0f0f0; padding: 10px;">${data.resume_text_excerpt}</pre>
+        `;
+      } catch (err) {
+        document.getElementById("loading").style.display = "none";
+        alert("Error uploading resume: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
