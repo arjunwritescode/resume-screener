@@ -6,7 +6,7 @@ A lightweight backend application that intelligently screens resumes (PDFs) usin
 
 ## 📌 Features
 
-- ✅ Upload resumes in PDF format
+- ✅ Upload resumes in PDF format.
 - ✅ Extract text using PyMuPDF
 - ✅ Basic skill-matching score (Python, SQL, ML, etc.)
 - ✅ GPT-4 powered AI evaluation (verdict & skill summary)
