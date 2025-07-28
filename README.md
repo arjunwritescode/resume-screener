@@ -3,7 +3,6 @@
 A lightweight backend application that intelligently screens resumes (PDFs) using AI and keyword analysis. Built using FastAPI and OpenAI, this tool extracts resume content, scores based on skill match, and generates an AI-driven evaluation.
 
 ---
-
 ## 📌 Features
 - ✅ Upload resumes in PDF format.
 - ✅ Extract text using PyMuPDF
